@@ -370,13 +370,18 @@ fib n = fib (n - 1) + fib (n - 2)
 
 listafib :: Int -> [Int]
 --necesita agregar los dos primeros elementos de la sucesion 0,1 cuando llegue a 1
-listafib 0 = [0..1]
+listafib 0 = [0,1]
+listafib 1 = [0,1,1]
+listafib 2 = [0,1,1,2]
+listafib 3 = [0,1,1,2]
 listafib n = listafib (n - 1) ++ [fib n]
 --si n pertenece en fib y existe en listafib devuelve True en esFib
 esFib :: Int -> Bool 
-esFib n = existe' (listafib n) (== n)
+esFib n = existe' (listafib n) ( == n)
 
 {-
+existe' :: [a]->(a->Bool)-Bool
+
 EJEMPLOS:
 listafib 2 --> [0,1,1,1]
 listafib 13 --> [0,1,1,1,2,3,5,8,13,21,34,55,89,144,233]
