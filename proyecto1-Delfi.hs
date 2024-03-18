@@ -14,6 +14,8 @@ esCero (-1) -> False
 esCero (-13) -> False
 esCero 0 -> True
 esCero 2 -> False
+esCero 3 -> False
+
 -}
 
 --b) esPositivo :: Int -> Bool, que verifica si un entero es estrictamente mayor a 0.
