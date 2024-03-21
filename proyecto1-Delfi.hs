@@ -317,9 +317,9 @@ factorial'' n = productoria [1..n]
 
 {-
 EJEMPLOS:
-ghci> factorial'' 5 -> 120
-ghci> factorial'' 3 -> 6
-ghci> factorial'' 2 -> 2
+factorial'' 5 -> 120
+factorial'' 3 -> 6
+factorial'' 2 -> 2
 -}
 
 --g) Programar la función multiplicaPrimos :: [Int] -> Int que calcula el producto de todos los números primos de una lista.
@@ -491,21 +491,31 @@ EJEMPLOS:
 --11. La funcion primIguales toma una lista y devuelve el mayor tramo inicial de la lista cuyos elementos son todos iguales entre sı.
 --a) Programá primIguales por recursion.
 
---primIguales :: Eq a => [a] -> [a]
---primIguales [] = []
---primIguales (x:xs) | (x == head xs) = x : primIguales xs
---                   | (x/= head xs) = [x]
---                   | otherwise = []
-
 primIguales :: Eq a => [a] -> [a]
 primIguales [] = []
-primIguales (x : y : xs) | x == y = [x] ++ [y] ++ primIguales xs | x /= y = [x]  
+primIguales [x] = [x]
+primIguales (x:xs) | (x == head xs) = x : primIguales xs
+                   | (x/= head xs) = [x]
+                   | otherwise = []
+
 
 {-
 EJEMPLOS:
+primIguales [2] --> [2]
+primIguales [2,3] --> [2]
+primIguales [2,2,3] --> [2,2]
+primIguales [2,2,3,2,2] --> [2,2]
 
 -}
 
 --b) Usá cualquier versión de primIgualesA para programar primIguales. Esta permitido dividir en casos, pero no usar recursion.
+primIguales' :: Eq a => [a] -> [a]
+primIguales' (x:xs) = primIgualesA' x (x:xs)
 
-
+{-
+EJEMPLOS:
+primIguales' [2,2,3,2,2] --> [2,2]
+primIguales' [2,3] --> [2]
+primIguales' [2,2,3] --> [2,2]
+primIguales' [2,2,3,2,2] --> [2,2]
+-}
