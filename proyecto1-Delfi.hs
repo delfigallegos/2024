@@ -15,7 +15,6 @@ esCero (-13) -> False
 esCero 0 -> True
 esCero 2 -> False
 esCero 3 -> False
-
 -}
 
 --b) esPositivo :: Int -> Bool, que verifica si un entero es estrictamente mayor a 0.
@@ -37,16 +36,11 @@ esVocal x = elem x "aeiou"
 
 {-
 EJEMPLOS:
- esVocal 'D'
-False
- esVocal 'e'
-True
- esVocal 'l'
-False
- esVocal 'f'
-False
- esVocal 'I'
-False
+ esVocal 'D' -> False
+ esVocal 'e' -> True
+ esVocal 'l' -> False
+ esVocal 'f' -> False
+ esVocal 'I' -> False
 -}
 
 --d) valorAbsoluto :: Int -> Int, que devuelve el valor absoluto de un entero ingresado.
@@ -292,36 +286,28 @@ existeDivisor n ls = existe' ls (divisor n)
 
 {-
 EJEMPLOS:
- existeDivisor 5 [10,5,35]
-True
- existeDivisor 5 []       
-False
- existeDivisor 2 [30,22,1]
-True
+ existeDivisor 5 [10,5,35] -> True
+ existeDivisor 5 [] -> False
+ existeDivisor 2 [30,22,1] -> True
 -}
 
 --e) Utilizando la funcion del apartado anterior, definı la función esPrimo:: Int -> Bool, que dado un entero n, devuelve True si y solo si n es primo.
 --Los números primos son aquellos que solo son divisibles entre ellos mismos y el 1, como 1 no es primo empezamos a utilizar desde el numero 2 
 
 esPrimo :: Int -> Bool
-esPrimo n = not (existeDivisor n [2..(n-1)]) && (n/=1)--1 es el unico q satisfase existeDivisor 
+esPrimo n = not (existeDivisor n [2..(n-1)]) && (n/=1) && (n/=0)
+--1 es el unico q satisfase existeDivisor 
 
 {-
 EJEMPLOS:
- esPrimo 1
-False
- esPrimo 11
-True
- esPrimo 2
-True
- esPrimo 3
-True
- esPrimo 10
-False
+ esPrimo 1 -> False
+ esPrimo 11-> True
+ esPrimo 3 -> True
+ esPrimo 10 -> False
 -}
 
 --f ) ¿Se te ocurre como redefinir factorial (ej. 2d) para evitar usar recursion? 
-{-2.d) un numero factorial es la multiplicacion de ese numero hasta 1 entonces buscamos una funcion q haga la mutiplicacion de 1 hasta ese numero n
+{-2.d) 
 factorial :: Int -> Int
 factorial 0 = 1
 factorial n = n * factorial (n-1)-} 
@@ -331,12 +317,9 @@ factorial'' n = productoria [1..n]
 
 {-
 EJEMPLOS:
-ghci> factorial'' 5
-120
-ghci> factorial'' 3
-6
-ghci> factorial'' 2
-2
+ghci> factorial'' 5 -> 120
+ghci> factorial'' 3 -> 6
+ghci> factorial'' 2 -> 2
 -}
 
 --g) Programar la función multiplicaPrimos :: [Int] -> Int que calcula el producto de todos los números primos de una lista.
@@ -350,12 +333,9 @@ multiplicaPrimos xs = productoria' xs primo
 
 {-
 EJEMPLOS:
- multiplicaPrimos [1,2,3]
-6
- multiplicaPrimos []
-1
- multiplicaPrimos [2,5,1]
-10
+ multiplicaPrimos [1,2,3] -> 6
+ multiplicaPrimos [] -> 1
+ multiplicaPrimos [2,5,1] -> 10
 -}
 
 --h) Programar la función esFib :: Int -> Bool, que dado un entero n, devuelve True si y solo si n esta en la sucesion de Fibonacci.
@@ -373,21 +353,16 @@ listafib :: Int -> [Int]
 listafib 0 = [0,1]
 listafib 1 = [0,1,1]
 listafib 2 = [0,1,1,2]
-listafib 3 = [0,1,1,2]
+listafib 3 = [0,1,1,2,3]
 listafib n = listafib (n - 1) ++ [fib n]
 --si n pertenece en fib y existe en listafib devuelve True en esFib
 esFib :: Int -> Bool 
 esFib n = existe' (listafib n) ( == n)
 
 {-
-existe' :: [a]->(a->Bool)-Bool
-
 EJEMPLOS:
-listafib 2 --> [0,1,1,1]
-listafib 13 --> [0,1,1,1,2,3,5,8,13,21,34,55,89,144,233]
-listafib 5 --> [0,1,1,1,2,3,5]
-esFib 5 --> True
 esFib 0 --> True
+esFib 3 --> True
 esFib 4 --> False
 esFib 10 --> False
 -}
@@ -395,6 +370,13 @@ esFib 10 --> False
 --i) Utilizando la función del apartado anterior, definı la función todosFib :: [Int] -> Bool que dada una lista xs de enteros, devuelva si todos los elementos de la lista pertenecen (o no) a la sucesión de Fibonacci.
 todosFib :: [Int] -> Bool
 todosFib xs = paratodo' xs esFib 
+
+{-
+EJEMPLOS:
+ todosFib [3] -> True
+ todosFib [20] -> False
+ todosFib [21] -> True
+-}
 
 --7. Indaga en Google sobre las funciones map y filter. Tambien podes consultar su tipo en ghci con el comando :t.
 -- ¿Que hacen estas funciones?¿A que equivale la expresión map succ [1, -4, 6, 2, -8], donde succ n = n+1?¿Y la expresión filter esPositivo [1, -4, 6, 2, -8]?
@@ -414,20 +396,22 @@ la expresion filter esPositivo [1, -4, 6, 2, -8] filtra entre enteros positivos 
 
 duplicarValor :: [Int] -> [Int]
 duplicarValor  [] = []
-duplicarValor (x:xs) = (x*2): duplicarValor xs
+duplicarValor (x:xs) = (x*2) : duplicarValor xs
 
 {-
 EJEMPLOS:
-
+ duplicarValor [2,6,8] -> [4,12,16]
+ duplicarValor [3,5,22] -> [6,10,44]
 -}
 
 --b) Definila utilizando la funcion map.
-duplicaValor' :: [Int] -> [Int]
-duplicaValor' xs = map (*2) xs
+duplicarValor' :: [Int] -> [Int]
+duplicarValor' xs = map (*2) xs
 
 {-
 EJEMPLOS:
-
+ duplicarValor' [3,5,22] -> [6,10,44]
+ duplicarValor' [10,9] -> [20,18]
 -}
 
 --9. Programa una funcion que dada una lista de números xs, calcula una lista que tiene como elementos aquellos números de xs que son primos.
@@ -440,7 +424,10 @@ listPrimo (x:xs) | esPrimo x == True = x: listPrimo xs
 
 {-
 EJEMPLOS:
-
+ listPrimo [0,7,11,12,13]
+[7,11,13]
+ listPrimo [1,2,3,4,5]   
+[2,3,5]
 -}
 
 --b) Definila utilizando la función filter.
@@ -450,7 +437,8 @@ listPrimo' xs = filter esPrimo xs
 
 {-
 EJEMPLOS:
-
+ listPrimo' [15,11,21,13] -> [11,13]
+ listPrimo' [7,5,3] -> [7,5,3]
 -}
 
 --c) Revisa tu definicion del ejercicio 6g. ¿Se puede mejorar?
@@ -461,12 +449,17 @@ multiplicaPrimos xs = productoria' xs primo
 -} 
 
 multiplicaPrimos' :: [Int] -> Int 
-multiplicaPrimos' (x:xs) = primo x * multiplicaPrimos' xs 
+--multiplicaPrimos' [] = 1
+--multiplicaPrimos' (x:xs) = primo x * multiplicaPrimos' xs 
+--multiplicaPrimos' :: [Int] -> Int
+multiplicaPrimos' n = productoria (listPrimo' n)
 
 {-
 EJEMPLOS:
-
+ multiplicaPrimos' [2,3] -> 6
+ multiplicaPrimos' [7,1,2] -> 14
 -}
+
 --10. La funcion primIgualesA toma un valor y una lista, y calcula el tramo inicial mas largo de la lista cuyos elementos son iguales a ese valor.
 --a) Programa primIgualesA por recursión.
 
@@ -476,22 +469,38 @@ primIgualesA n (x:xs) | n == x = x : primIgualesA n xs
                       | otherwise = []
 {-
 EJEMPLOS:
-
+ primIgualesA 2 [1,2,3] -> []
+ primIgualesA 2 [2,2,2,3,4] -> [2,2,2]
+ primIgualesA 1 [1,1,1,1,0,1,1] -> [1,1,1,1]
+ primIgualesA 'a' "aaabae" -> "aaa"
+ primIgualesA 'a' "aaaaaaaaaaeee" -> "aaaaaaaaaa"
 -}
 
 --b) Programa nuevamente la función utilizando takeWhile.
 
---primIgualesA' :: Eq a => a -> [a] -> [a]
---primIgualesA' n xs =
+primIgualesA' :: Eq a => a -> [a] -> [a]
+primIgualesA' n xs = takeWhile (==n) xs
+
+{-
+EJEMPLOS:
+ primIgualesA' 'a' "aaaee" --> "aaa"
+ primIgualesA' 'a' "a" --> "a"
+ primIgualesA' 1 [1,1,1,0] --> [1,1,1]
+-}
 
 --11. La funcion primIguales toma una lista y devuelve el mayor tramo inicial de la lista cuyos elementos son todos iguales entre sı.
 --a) Programá primIguales por recursion.
 
+--primIguales :: Eq a => [a] -> [a]
+--primIguales [] = []
+--primIguales (x:xs) | (x == head xs) = x : primIguales xs
+--                   | (x/= head xs) = [x]
+--                   | otherwise = []
+
 primIguales :: Eq a => [a] -> [a]
 primIguales [] = []
-primIguales (x:xs) | (x == head xs) = x : primIguales xs
-                   | otherwise = [x]
-               
+primIguales (x : y : xs) | x == y = [x] ++ [y] ++ primIguales xs | x /= y = [x]  
+
 {-
 EJEMPLOS:
 
